@@ -1,0 +1,72 @@
+<ion-content [fullscreen]="true" class="login-page">
+  <main class="login-layout">
+    <section class="brand-panel">
+      <div class="brand-mark" aria-hidden="true"><ion-icon name="map-outline"></ion-icon></div>
+      <p class="eyebrow">Prototipo académico · ITLA 2-2026</p>
+      <h1>Gestión municipal, más cerca de la ciudadanía.</h1>
+      <p class="lead">Registre incidencias, conozca cada avance y facilite la coordinación del ayuntamiento desde una experiencia segura de demostración.</p>
+      <div class="feature-row">
+        <span><ion-icon name="checkmark-circle"></ion-icon> Seguimiento trazable</span>
+        <span><ion-icon name="notifications"></ion-icon> Avisos por estado</span>
+        <span><ion-icon name="analytics"></ion-icon> Gestión basada en datos</span>
+      </div>
+      <div class="demo-notice"><strong>Entorno DEMO</strong><br>Todos los nombres, solicitudes e indicadores son ficticios.</div>
+    </section>
+
+    <section class="access-panel">
+      <div class="access-card">
+        <div class="mobile-brand"><span>GSD</span><small>Gestión ciudadana</small></div>
+        <div class="mode-switch" role="tablist" aria-label="Acceso o registro">
+          <button [class.active]="mode === 'login'" (click)="mode = 'login'; message = ''">Iniciar sesión</button>
+          <button [class.active]="mode === 'register'" (click)="mode = 'register'; message = ''">Registrarse</button>
+        </div>
+
+        <ng-container *ngIf="mode === 'login'; else registrationForm">
+          <div class="heading-block">
+            <p class="eyebrow">Acceso por perfil</p>
+            <h2>Bienvenido al prototipo</h2>
+            <p>Seleccione una cuenta o escriba las credenciales demo.</p>
+          </div>
+
+          <div class="demo-accounts">
+            <button *ngFor="let account of accounts" (click)="chooseAccount(account.email)" [class.selected]="email === account.email">
+              <ion-icon [name]="account.icon"></ion-icon>
+              <span><strong>{{ account.role }}</strong><small>{{ account.note }}</small></span>
+            </button>
+          </div>
+
+          <form (ngSubmit)="login()" novalidate>
+            <label>Correo electrónico
+              <span class="input-wrap"><ion-icon name="mail-outline"></ion-icon><input name="email" type="email" autocomplete="username" [(ngModel)]="email" placeholder="usuario@demo.do"></span>
+            </label>
+            <label>Contraseña
+              <span class="input-wrap"><ion-icon name="lock-closed-outline"></ion-icon><input name="password" type="password" autocomplete="current-password" [(ngModel)]="password" placeholder="Contraseña demo"></span>
+            </label>
+            <p class="error" *ngIf="message"><ion-icon name="alert-circle"></ion-icon>{{ message }}</p>
+            <button class="primary" type="submit" [disabled]="busy">{{ busy ? 'Validando…' : 'Iniciar sesión' }} <ion-icon name="arrow-forward"></ion-icon></button>
+          </form>
+          <div class="credential-box"><span>Contraseña para todas las cuentas</span><strong>{{ demoPassword }}</strong></div>
+        </ng-container>
+
+        <ng-template #registrationForm>
+          <div class="heading-block">
+            <p class="eyebrow">Cuenta ciudadana</p>
+            <h2>Crear acceso de demostración</h2>
+            <p>Los datos permanecen únicamente en este navegador.</p>
+          </div>
+          <form class="register-grid" (ngSubmit)="register()" novalidate>
+            <label>Nombres<input name="firstName" [(ngModel)]="registration.firstName" placeholder="Nombres ficticios"></label>
+            <label>Apellidos<input name="lastName" [(ngModel)]="registration.lastName" placeholder="Apellidos ficticios"></label>
+            <label class="wide">Correo electrónico<input name="registerEmail" type="email" [(ngModel)]="registration.email" placeholder="correo@example.invalid"></label>
+            <label>Teléfono<input name="phone" [(ngModel)]="registration.phone" placeholder="809-555-0000"></label>
+            <label>Contraseña demo<input name="registerPassword" type="password" [(ngModel)]="registration.password" placeholder="121212"></label>
+            <label class="checkbox wide"><input name="accepted" type="checkbox" [(ngModel)]="registration.accepted"> Acepto que esta cuenta y sus datos son ficticios y se usarán solo en el prototipo.</label>
+            <p class="error wide" *ngIf="message"><ion-icon name="alert-circle"></ion-icon>{{ message }}</p>
+            <button class="primary wide" type="submit">Crear cuenta ciudadana <ion-icon name="arrow-forward"></ion-icon></button>
+          </form>
+        </ng-template>
+      </div>
+      <p class="privacy-note">Prototipo funcional sin autenticación ni base de datos de producción.</p>
+    </section>
+  </main>
+</ion-content>
