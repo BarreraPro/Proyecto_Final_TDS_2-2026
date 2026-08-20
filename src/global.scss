@@ -25,6 +25,22 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+:root {
+  color-scheme: light;
+
+  --ion-background-color: #f3f6f6;
+  --ion-background-color-rgb: 243, 246, 246;
+
+  --ion-text-color: #1c303a;
+  --ion-text-color-rgb: 28, 48, 58;
+}
+
+html,
+body,
+ion-app {
+  background: #f3f6f6 !important;
+  color-scheme: light;
+}
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------

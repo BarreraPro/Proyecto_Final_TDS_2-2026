@@ -1,5 +1,11 @@
 :host { --navy: #102f3f; --navy-2: #183f50; --teal: #0b766e; --teal-2: #15998b; --mint: #e4f3ef; --ink: #1c303a; --muted: #6c7f87; --line: #dce6e6; --surface: #fff; --bg: #f3f6f6; }
-.app-canvas { --background: var(--bg); color: var(--ink); }
+.app-canvas {
+  --background: var(--bg) !important;
+  background: var(--bg) !important;
+  color: var(--ink);
+  color-scheme: light;
+  --overflow: auto;
+}
 .app-shell { min-height: 100%; display: grid; grid-template-columns: 258px minmax(0, 1fr); }
 .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; background: linear-gradient(180deg, #0e2d3d, #133b48); color: white; padding: 28px 18px 22px; display: flex; flex-direction: column; z-index: 10; }
 .logo { display: flex; align-items: center; gap: 11px; padding: 0 8px 24px; font-size: 13px; font-weight: 900; }

@@ -1,5 +1,10 @@
 :host { --navy: #102c3c; --teal: #0a776f; --mint: #dff3ed; --ink: #172b36; }
-.login-page { --background: #f4f7f7; color: var(--ink); }
+.login-page {
+  --background: #f4f7f7 !important;
+  background: #f4f7f7 !important;
+  color: var(--ink);
+  color-scheme: light;
+}
 .login-layout { min-height: 100%; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
 .brand-panel { min-width: 0; position: relative; overflow: hidden; padding: clamp(42px, 5vw, 82px); background: linear-gradient(150deg, #0d2939 0%, #104757 52%, #0b766e 100%); color: white; display: flex; flex-direction: column; justify-content: center; }
 .brand-panel::after { content: ''; position: absolute; width: 480px; height: 480px; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; right: -240px; bottom: -190px; box-shadow: 0 0 0 70px rgba(255,255,255,.035), 0 0 0 140px rgba(255,255,255,.025); }
