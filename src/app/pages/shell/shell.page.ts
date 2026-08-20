@@ -1,7 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  effect,
+  inject,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { AuthService } from '../../core/auth.service';
 import { addIcons } from 'ionicons';
 import {
@@ -12,29 +19,47 @@ import {
   arrowBack,
   arrowForward,
   barChartOutline,
+  business,
   checkmark,
+  checkmarkCircle,
   checkmarkCircleOutline,
+  checkmarkDone,
   checkmarkDoneOutline,
+  chevronBack,
   chevronForward,
   chevronForwardOutline,
+  close,
+  closeCircle,
+  cloudUploadOutline,
+  construct,
   constructOutline,
   documentTextOutline,
+  documents,
   documentsOutline,
   download,
   ellipse,
   fileTrayFullOutline,
+  gitBranch,
+  gitNetwork,
   gridOutline,
   helpBuoyOutline,
   homeOutline,
   imageOutline,
+  informationCircle,
   informationCircleOutline,
   locationOutline,
+  lockClosed,
+  logOut,
   logOutOutline,
+  mailUnread,
   mailUnreadOutline,
   navigateCircleOutline,
   notificationsOutline,
   optionsOutline,
+  people,
+  personAdd,
   personOutline,
+  pricetags,
   print,
   printOutline,
   receiptOutline,
@@ -45,10 +70,14 @@ import {
   searchOutline,
   send,
   sendOutline,
+  shieldCheckmark,
   shieldCheckmarkOutline,
   star,
   starOutline,
+  swapHorizontal,
   timeOutline,
+  warning,
+  warningOutline,
 } from 'ionicons/icons';
 import {
   Category, CitizenRequest, Department, NewRequestInput, RequestStatus,
@@ -64,7 +93,8 @@ import { StorageService } from '../../core/storage.service';
   styleUrls: ['./shell.page.scss'],
 })
 export class ShellPage implements OnInit {
-  @ViewChild('pageContent', { static: false }) pageContent?: IonContent;
+  @ViewChild('pageContent', { static: false })
+pageContent?: ElementRef<HTMLDivElement>;
   readonly storage = inject(StorageService);
   readonly auth = inject(AuthService);
   readonly statusLabel = STATUS_LABEL;
@@ -123,9 +153,7 @@ export class ShellPage implements OnInit {
           : ['resumen', 'catalogos', 'reportes', 'auditoria'];
       if (role && !allowed.includes(this.activeView)) this.activeView = role === 'ciudadano' ? 'inicio' : role === 'municipal' ? 'dashboard' : 'resumen';
     });
-
-
-    addIcons({
+      addIcons({
   add,
   'add-circle-outline': addCircleOutline,
   'alert-circle-outline': alertCircleOutline,
@@ -133,29 +161,47 @@ export class ShellPage implements OnInit {
   'arrow-back': arrowBack,
   'arrow-forward': arrowForward,
   'bar-chart-outline': barChartOutline,
+  business,
   checkmark,
+  'checkmark-circle': checkmarkCircle,
   'checkmark-circle-outline': checkmarkCircleOutline,
+  'checkmark-done': checkmarkDone,
   'checkmark-done-outline': checkmarkDoneOutline,
+  'chevron-back': chevronBack,
   'chevron-forward': chevronForward,
   'chevron-forward-outline': chevronForwardOutline,
+  close,
+  'close-circle': closeCircle,
+  'cloud-upload-outline': cloudUploadOutline,
+  construct,
   'construct-outline': constructOutline,
   'document-text-outline': documentTextOutline,
+  documents,
   'documents-outline': documentsOutline,
   download,
   ellipse,
   'file-tray-full-outline': fileTrayFullOutline,
+  'git-branch': gitBranch,
+  'git-network': gitNetwork,
   'grid-outline': gridOutline,
   'help-buoy-outline': helpBuoyOutline,
   'home-outline': homeOutline,
   'image-outline': imageOutline,
+  'information-circle': informationCircle,
   'information-circle-outline': informationCircleOutline,
   'location-outline': locationOutline,
+  'lock-closed': lockClosed,
+  'log-out': logOut,
   'log-out-outline': logOutOutline,
+  'mail-unread': mailUnread,
   'mail-unread-outline': mailUnreadOutline,
   'navigate-circle-outline': navigateCircleOutline,
   'notifications-outline': notificationsOutline,
   'options-outline': optionsOutline,
+  people,
+  'person-add': personAdd,
   'person-outline': personOutline,
+  pricetags,
   print,
   'print-outline': printOutline,
   'receipt-outline': receiptOutline,
@@ -166,10 +212,14 @@ export class ShellPage implements OnInit {
   'search-outline': searchOutline,
   send,
   'send-outline': sendOutline,
+  'shield-checkmark': shieldCheckmark,
   'shield-checkmark-outline': shieldCheckmarkOutline,
   star,
   'star-outline': starOutline,
+  'swap-horizontal': swapHorizontal,
   'time-outline': timeOutline,
+  warning,
+  'warning-outline': warningOutline,
 });
   }
 
@@ -254,9 +304,12 @@ navigate(view: string): void {
   this.selectedRequestId = undefined;
   this.clearMessages();
 
-  setTimeout(() => {
-    this.pageContent?.scrollToTop(250);
+setTimeout(() => {
+  this.pageContent?.nativeElement.scrollTo({
+    top: 0,
+    behavior: 'smooth'
   });
+}, 0);
 }
 
 openRequest(request: CitizenRequest, view?: string): void {
@@ -275,8 +328,11 @@ openRequest(request: CitizenRequest, view?: string): void {
   this.clearMessages();
 
   setTimeout(() => {
-    this.pageContent?.scrollToTop(250);
+  this.pageContent?.nativeElement.scrollTo({
+    top: 0,
+    behavior: 'smooth'
   });
+}, 0);
 }
 
   validateRequest(): void {

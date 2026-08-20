@@ -1,6 +1,6 @@
-<ion-content  #pageContent
-  [fullscreen]="true"
-  [scrollY]="true"
+
+
+<div #pageContent
   class="app-canvas">
   <div class="app-shell" [class.citizen-shell]="role === 'ciudadano'">
     <aside class="sidebar" *ngIf="role !== 'ciudadano'">
@@ -29,7 +29,27 @@
           <button class="notification-button" *ngIf="role === 'ciudadano'" (click)="navigate('notificaciones')" aria-label="Notificaciones"><ion-icon name="notifications-outline"></ion-icon><span *ngIf="unreadNotifications">{{ unreadNotifications }}</span></button>
           <div class="avatar">{{ user.firstName[0] }}{{ user.lastName[0] }}</div>
           <div class="account-copy"><strong>{{ user.firstName }} {{ user.lastName }}</strong><span>{{ role === 'ciudadano' ? 'Ciudadano' : role === 'municipal' ? 'Personal municipal' : 'Administrador' }} · DEMO</span></div>
-          <button class="icon-button" (click)="logout()" title="Cerrar sesión"><ion-icon name="log-out-outline"></ion-icon></button>
+          <button
+  class="icon-button"
+  (click)="logout()"
+  title="Cerrar sesión"
+  aria-label="Cerrar sesión"
+>
+  <svg
+    viewBox="0 0 24 24"
+    width="22"
+    height="22"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+    <polyline points="16 17 21 12 16 7"></polyline>
+    <line x1="21" y1="12" x2="9" y2="12"></line>
+  </svg>
+</button>
         </div>
       </header>
 
@@ -184,4 +204,4 @@
       <nav class="bottom-nav" *ngIf="role === 'ciudadano'" aria-label="Navegación ciudadana"><button [class.active]="activeView==='inicio'" (click)="navigate('inicio')"><ion-icon name="home-outline"></ion-icon><span>Inicio</span></button><button [class.active]="activeView==='solicitudes' || activeView==='detalle'" (click)="navigate('solicitudes')"><ion-icon name="documents-outline"></ion-icon><span>Solicitudes</span></button><button class="new-fab" [class.active]="activeView==='nueva'" (click)="navigate('nueva')"><i><ion-icon name="add"></ion-icon></i><span>Nueva</span></button><button [class.active]="activeView==='notificaciones'" (click)="navigate('notificaciones')"><ion-icon name="notifications-outline"></ion-icon><span>Avisos</span><b *ngIf="unreadNotifications">{{ unreadNotifications }}</b></button><button [class.active]="activeView==='perfil'" (click)="navigate('perfil')"><ion-icon name="person-outline"></ion-icon><span>Perfil</span></button></nav>
     </div>
   </div>
-</ion-content>
+</div>
