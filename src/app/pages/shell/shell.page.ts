@@ -1,8 +1,55 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonContent, IonicModule } from '@ionic/angular';
 import { AuthService } from '../../core/auth.service';
+import { addIcons } from 'ionicons';
+import {
+  add,
+  addCircleOutline,
+  alertCircleOutline,
+  analyticsOutline,
+  arrowBack,
+  arrowForward,
+  barChartOutline,
+  checkmark,
+  checkmarkCircleOutline,
+  checkmarkDoneOutline,
+  chevronForward,
+  chevronForwardOutline,
+  constructOutline,
+  documentTextOutline,
+  documentsOutline,
+  download,
+  ellipse,
+  fileTrayFullOutline,
+  gridOutline,
+  helpBuoyOutline,
+  homeOutline,
+  imageOutline,
+  informationCircleOutline,
+  locationOutline,
+  logOutOutline,
+  mailUnreadOutline,
+  navigateCircleOutline,
+  notificationsOutline,
+  optionsOutline,
+  personOutline,
+  print,
+  printOutline,
+  receiptOutline,
+  refresh,
+  refreshOutline,
+  ribbonOutline,
+  search,
+  searchOutline,
+  send,
+  sendOutline,
+  shieldCheckmarkOutline,
+  star,
+  starOutline,
+  timeOutline,
+} from 'ionicons/icons';
 import {
   Category, CitizenRequest, Department, NewRequestInput, RequestStatus,
   STATUS_LABEL, STATUS_ORDER, User,
@@ -17,6 +64,7 @@ import { StorageService } from '../../core/storage.service';
   styleUrls: ['./shell.page.scss'],
 })
 export class ShellPage implements OnInit {
+  @ViewChild('pageContent', { static: false }) pageContent?: IonContent;
   readonly storage = inject(StorageService);
   readonly auth = inject(AuthService);
   readonly statusLabel = STATUS_LABEL;
@@ -62,6 +110,8 @@ export class ShellPage implements OnInit {
   reportFrom = '';
   reportTo = '';
 
+  
+
   constructor() {
     this.activeView = this.role === 'ciudadano' ? 'inicio' : this.role === 'municipal' ? 'dashboard' : 'resumen';
     effect(() => {
@@ -73,6 +123,54 @@ export class ShellPage implements OnInit {
           : ['resumen', 'catalogos', 'reportes', 'auditoria'];
       if (role && !allowed.includes(this.activeView)) this.activeView = role === 'ciudadano' ? 'inicio' : role === 'municipal' ? 'dashboard' : 'resumen';
     });
+
+
+    addIcons({
+  add,
+  'add-circle-outline': addCircleOutline,
+  'alert-circle-outline': alertCircleOutline,
+  'analytics-outline': analyticsOutline,
+  'arrow-back': arrowBack,
+  'arrow-forward': arrowForward,
+  'bar-chart-outline': barChartOutline,
+  checkmark,
+  'checkmark-circle-outline': checkmarkCircleOutline,
+  'checkmark-done-outline': checkmarkDoneOutline,
+  'chevron-forward': chevronForward,
+  'chevron-forward-outline': chevronForwardOutline,
+  'construct-outline': constructOutline,
+  'document-text-outline': documentTextOutline,
+  'documents-outline': documentsOutline,
+  download,
+  ellipse,
+  'file-tray-full-outline': fileTrayFullOutline,
+  'grid-outline': gridOutline,
+  'help-buoy-outline': helpBuoyOutline,
+  'home-outline': homeOutline,
+  'image-outline': imageOutline,
+  'information-circle-outline': informationCircleOutline,
+  'location-outline': locationOutline,
+  'log-out-outline': logOutOutline,
+  'mail-unread-outline': mailUnreadOutline,
+  'navigate-circle-outline': navigateCircleOutline,
+  'notifications-outline': notificationsOutline,
+  'options-outline': optionsOutline,
+  'person-outline': personOutline,
+  print,
+  'print-outline': printOutline,
+  'receipt-outline': receiptOutline,
+  refresh,
+  'refresh-outline': refreshOutline,
+  'ribbon-outline': ribbonOutline,
+  search,
+  'search-outline': searchOutline,
+  send,
+  'send-outline': sendOutline,
+  'shield-checkmark-outline': shieldCheckmarkOutline,
+  star,
+  'star-outline': starOutline,
+  'time-outline': timeOutline,
+});
   }
 
   ngOnInit(): void {
@@ -151,25 +249,35 @@ export class ShellPage implements OnInit {
   }
   get resolvedReportCount(): number { return this.reportRequests.filter((item) => ['resuelta', 'cerrada'].includes(item.status)).length; }
 
-  navigate(view: string): void {
-    this.activeView = view;
-    this.selectedRequestId = undefined;
-    this.clearMessages();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+navigate(view: string): void {
+  this.activeView = view;
+  this.selectedRequestId = undefined;
+  this.clearMessages();
 
-  openRequest(request: CitizenRequest, view?: string): void {
-    this.selectedRequestId = request.id;
-    if (view) this.activeView = view;
-    this.assignmentDepartment = request.departmentId ?? 0;
-    const activeAssignment = this.db.assignments.find((item) => item.requestId === request.id && item.active);
-    this.assignmentEmployee = activeAssignment?.employeeId ?? 0;
-    this.assignmentNote = activeAssignment?.note ?? '';
-    this.nextStatus = '';
-    this.statusReason = '';
-    this.clearMessages();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  setTimeout(() => {
+    this.pageContent?.scrollToTop(250);
+  });
+}
+
+openRequest(request: CitizenRequest, view?: string): void {
+  this.selectedRequestId = request.id;
+  if (view) this.activeView = view;
+  this.assignmentDepartment = request.departmentId ?? 0;
+
+  const activeAssignment = this.db.assignments.find(
+    (item) => item.requestId === request.id && item.active
+  );
+
+  this.assignmentEmployee = activeAssignment?.employeeId ?? 0;
+  this.assignmentNote = activeAssignment?.note ?? '';
+  this.nextStatus = '';
+  this.statusReason = '';
+  this.clearMessages();
+
+  setTimeout(() => {
+    this.pageContent?.scrollToTop(250);
+  });
+}
 
   validateRequest(): void {
     this.clearMessages();

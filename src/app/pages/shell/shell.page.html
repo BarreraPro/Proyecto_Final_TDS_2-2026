@@ -1,4 +1,7 @@
-<ion-content [fullscreen]="true" class="app-canvas">
+<ion-content  #pageContent
+  [fullscreen]="true"
+  [scrollY]="true"
+  class="app-canvas">
   <div class="app-shell" [class.citizen-shell]="role === 'ciudadano'">
     <aside class="sidebar" *ngIf="role !== 'ciudadano'">
       <div class="logo"><span>GSD</span><div>Gestión Municipal<small>Prototipo ITLA</small></div></div>
